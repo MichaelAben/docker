@@ -1,4 +1,4 @@
-# Apache, PHP, MYSQL, PHPmyadmin, Mailhog
+# Apache, PHP, MYSQL, PHPmyadmin, Mailhog, NPM
 
 ## Config
 * vhosts go into ./config/vhosts
