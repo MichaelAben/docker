@@ -7,12 +7,16 @@
 
 There is a .env file where you can modify the directories and the mysql credentials
 
+## Log files
+* apache ./log/apache2
+* mysql ./log/mysql
+
 ## URL's
 
 _Remember to add project.local to your host file_
 
 **Application without ssl**
-http://project.local
+http://project.local Will redirect to https as of latest build
 
 **Application with ssl**
 https://project.local
@@ -34,5 +38,4 @@ Application code can be placed inside ./www remember that the default vhost will
 
 ## Database
 All database files are inside ./data/mysql
-
 
