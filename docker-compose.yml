@@ -16,6 +16,7 @@ services:
       - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
       - ${APACHE_LOG_DIR}:/var/log/apache2
       - ${CERTIFICATES}:/etc/apache2/ssl
+      - ${CRON_D_DIR}:/etc/crontab
     environment:
       - TZ=Europe/Amsterdam
 
