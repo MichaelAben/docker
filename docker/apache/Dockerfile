@@ -31,7 +31,8 @@ RUN apt-get -y -qq install --fix-missing \
                 curl \
                 libcurl4 \
                 nodejs \
-                cron
+                cron \
+		supervisor
 
 RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install pdo_sqlite && \
