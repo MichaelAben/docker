@@ -36,6 +36,7 @@ RUN apt-get -y -qq install --fix-missing \
 
 RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install pdo_sqlite && \
+    docker-php-ext-install bcmath && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install tokenizer && \
     docker-php-ext-install json && \
