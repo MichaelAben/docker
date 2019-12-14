@@ -32,7 +32,10 @@ RUN apt-get -y -qq install --fix-missing \
                 libcurl4 \
                 nodejs \
                 cron \
-		supervisor
+		        supervisor \
+		        libmagickwand-dev
+
+RUN pecl install imagick
 
 RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install pdo_sqlite && \
@@ -44,7 +47,8 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install soap && \
     docker-php-ext-configure gd && \
-    docker-php-ext-install -j$(nproc) gd
+    docker-php-ext-install -j$(nproc) gd && \
+    docker-php-ext-enable imagick
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
