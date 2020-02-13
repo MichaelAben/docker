@@ -5,3 +5,4 @@ logs/mysql/*
 logs/apache2/*
 !logs/apache2/.gitkeep
 .idea/
+.DS_Store
