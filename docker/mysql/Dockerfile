@@ -1,2 +1,2 @@
-FROM mysql:5.7
+FROM mariadb:10.1.26
 MAINTAINER Michael Aben <m.aben@live.nl>

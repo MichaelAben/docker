@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:7.2.23-apache
 MAINTAINER Michael Aben <m.aben@live.nl>
 
 RUN apt-get -y update --fix-missing
