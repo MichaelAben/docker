@@ -67,6 +67,11 @@ ENV PATH /usr/local/go/bin:$PATH
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 
+#Set apache document root
+ENV APACHE_DOCUMENT_ROOT=/project
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
 # Run crontab
 RUN service cron start
 
