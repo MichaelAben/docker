@@ -6,3 +6,7 @@ logs/apache2/*
 !logs/apache2/.gitkeep
 .idea/
 .DS_Store
+www/*
+!www/default/public/index.php
+config/vhosts/*
+!config/vhosts/default.conf.example
