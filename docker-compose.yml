@@ -11,13 +11,13 @@ services:
     links:
       - mysql
     volumes:
-      - ${DOCUMENT_ROOT}:/project
-      - ${PHP_INI}:/usr/local/etc/php/php.ini
-      - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
-      - ${APACHE_LOG_DIR}:/var/log/apache2
-      - ${CERTIFICATES}:/etc/apache2/ssl
-      - ${CRONJOB_DIR}:/etc/cron.d
-      - ${SUPERVISOR_DIR}:/etc/supervisor/conf.d
+      - ${DOCUMENT_ROOT}:/project:delegated
+      - ${PHP_INI}:/usr/local/etc/php/php.ini:cached
+      - ${VHOSTS_DIR}:/etc/apache2/sites-enabled:cached
+      - ${APACHE_LOG_DIR}:/var/log/apache2:cached
+      - ${CERTIFICATES}:/etc/apache2/ssl:cached
+      - ${CRONJOB_DIR}:/etc/cron.d:cached
+      - ${SUPERVISOR_DIR}:/etc/supervisor/conf.d:cached
     environment:
       - TZ=Europe/Amsterdam
 
@@ -28,8 +28,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ${MYSQL_DATA_DIR}:/var/lib/mysql
-      - ${MYSQL_LOG_DIR}:/var/log/mysql
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql:delegated
+      - ${MYSQL_LOG_DIR}:/var/log/mysql:delegated
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}

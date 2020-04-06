@@ -50,6 +50,10 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install gd && \
     docker-php-ext-enable imagick
 
+RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /var/lib/apt/lists/*
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap
+
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
