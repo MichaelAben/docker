@@ -10,3 +10,5 @@ www/*
 !www/default/public/index.php
 config/vhosts/*
 !config/vhosts/default.conf.example
+config/sessions/*
+!config/sessions/.gitkeep

@@ -18,6 +18,7 @@ services:
       - ${CERTIFICATES}:/etc/apache2/ssl:cached
       - ${CRONJOB_DIR}:/etc/cron.d:cached
       - ${SUPERVISOR_DIR}:/etc/supervisor/conf.d:cached
+      - ${SESSIONS_DIR}:/sessions:cached
     environment:
       - TZ=Europe/Amsterdam
 
