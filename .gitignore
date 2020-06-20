@@ -9,6 +9,6 @@ logs/apache2/*
 www/*
 !www/default/public/index.php
 config/vhosts/*
-!config/vhosts/default.conf.example
+!config/vhosts/default.conf
 config/sessions/*
 !config/sessions/.gitkeep
