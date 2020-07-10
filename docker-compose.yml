@@ -21,6 +21,7 @@ services:
       - ${SESSIONS_DIR}:/sessions:cached
     environment:
       - TZ=Europe/Amsterdam
+      - COMPOSER_MEMORY_LIMIT=-1
 
   mysql:
     build:
@@ -29,8 +30,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ${MYSQL_DATA_DIR}:/var/lib/mysql:delegated
-      - ${MYSQL_LOG_DIR}:/var/log/mysql:delegated
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR}:/var/log/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
