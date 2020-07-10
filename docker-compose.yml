@@ -20,6 +20,7 @@ services:
       - ${SUPERVISOR_DIR}:/etc/supervisor/conf.d:cached
     environment:
       - TZ=Europe/Amsterdam
+      - COMPOSER_MEMORY_LIMIT=-1
 
   mysql:
     build:

@@ -76,6 +76,12 @@ ENV APACHE_DOCUMENT_ROOT=/project
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+RUN apt-get update
+RUN apt-get install -y locales locales-all
+ENV LC_ALL nl_NL.utf8
+ENV LANG nl_NL.utf8
+ENV LANGUAGE nl_NL.utf8
+
 # Run crontab
 RUN service cron start
 
