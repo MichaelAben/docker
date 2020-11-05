@@ -12,3 +12,5 @@ config/vhosts/*
 !config/vhosts/default.conf
 config/sessions/*
 !config/sessions/.gitkeep
+config/supervisor/*
+!config/supervisor/.gitkeep

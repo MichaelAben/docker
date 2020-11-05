@@ -71,11 +71,12 @@ ENV PATH /usr/local/go/bin:$PATH
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 
-#Set apache document root
+# Set apache document root
 ENV APACHE_DOCUMENT_ROOT=/project
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+# Locales
 RUN apt-get update
 RUN apt-get install -y locales locales-all
 ENV LC_ALL nl_NL.utf8
@@ -88,5 +89,8 @@ RUN service cron start
 # Enable apache modules
 RUN a2enmod rewrite headers
 RUN a2enmod ssl
-RUN service apache2 restart
+#RUN service apache2 restart
 RUN a2enmod expires
+
+# Run Supervisor
+CMD ["/usr/bin/supervisord"]
