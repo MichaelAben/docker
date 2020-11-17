@@ -32,7 +32,6 @@ RUN apt-get -y -qq install --fix-missing \
                 libcurl4 \
                 nodejs \
                 cron \
-		        supervisor \
 		        libmagickwand-dev
 
 RUN pecl install imagick
@@ -91,6 +90,3 @@ RUN a2enmod rewrite headers
 RUN a2enmod ssl
 #RUN service apache2 restart
 RUN a2enmod expires
-
-# Run Supervisor
-CMD ["/usr/bin/supervisord"]
