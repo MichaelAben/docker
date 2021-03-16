@@ -47,7 +47,8 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install soap && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd && \
-    docker-php-ext-enable imagick
+    docker-php-ext-enable imagick && \
+    docker-php-ext-install exif
 
 RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /var/lib/apt/lists/*
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
