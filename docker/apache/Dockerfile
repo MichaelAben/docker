@@ -1,68 +1,76 @@
-FROM php:7.2.23-apache
+FROM php:8-apache
 MAINTAINER Michael Aben <m.aben@live.nl>
 
+# Update everything
 RUN apt-get -y update --fix-missing
 RUN apt-get upgrade -y
 
 # Download Node.JS
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash
 
-# Other PHP7 Extensions
+# Somehow this is neded, dont know why
 RUN rm /etc/apt/preferences.d/no-debian-php
-RUN apt-get -y -qq install --fix-missing \
-                libsqlite3-dev \
-                libzip-dev \
-                zip \
-                libicu-dev \
-                libonig-dev \
-                libxml2-dev \
-                php-soap \
-                libfreetype6-dev \
-                libjpeg62-turbo-dev \
-                libpng-dev \
-                apt-utils \
-                nano \
-                wget \
-                dialog \
-                iputils-ping \
-                apt-utils \
-                build-essential \
-                git \
-                curl \
-                libcurl4 \
-                nodejs \
-                cron \
-		        libmagickwand-dev
 
-RUN pecl install imagick
+# Other PHP Extensions
+RUN apt-get -y -qq install --fix-missing libsqlite3-dev
+RUN apt-get -y -qq install --fix-missing libzip-dev
+RUN apt-get -y -qq install --fix-missing zip
+RUN apt-get -y -qq install --fix-missing libicu-dev
+RUN apt-get -y -qq install --fix-missing libonig-dev
+RUN apt-get -y -qq install --fix-missing libxml2-dev
+RUN apt-get -y -qq install --fix-missing php-soap
+RUN apt-get -y -qq install --fix-missing libfreetype6-dev
+RUN apt-get -y -qq install --fix-missing libjpeg62-turbo-dev
+RUN apt-get -y -qq install --fix-missing libpng-dev
+RUN apt-get -y -qq install --fix-missing apt-utils
+RUN apt-get -y -qq install --fix-missing nano
+RUN apt-get -y -qq install --fix-missing wget
+RUN apt-get -y -qq install --fix-missing dialog
+RUN apt-get -y -qq install --fix-missing iputils-ping
+RUN apt-get -y -qq install --fix-missing apt-utils
+RUN apt-get -y -qq install --fix-missing build-essential
+RUN apt-get -y -qq install --fix-missing git
+RUN apt-get -y -qq install --fix-missing curl
+RUN apt-get -y -qq install --fix-missing libcurl4
+RUN apt-get -y -qq install --fix-missing nodejs
+RUN apt-get -y -qq install --fix-missing cron
+RUN apt-get -y -qq install --fix-missing libmagickwand-dev
+RUN apt-get -y -qq install --fix-missing libc-client-dev
+RUN apt-get -y -qq install --fix-missing libkrb5-dev
 
-RUN docker-php-ext-install pdo_mysql && \
-    docker-php-ext-install pdo_sqlite && \
-    docker-php-ext-install bcmath && \
-    docker-php-ext-install mysqli && \
-    docker-php-ext-install tokenizer && \
-    docker-php-ext-install json && \
-    docker-php-ext-install zip && \
-    docker-php-ext-install -j$(nproc) intl && \
-    docker-php-ext-install soap && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-install gd && \
-    docker-php-ext-enable imagick
+# Remove unneded files
+RUN rm -r /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /var/lib/apt/lists/*
-RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install imap
+# Add Imageick
+RUN mkdir -p /usr/src/php/ext/imagick;
+RUN curl -fsSL https://github.com/Imagick/imagick/archive/06116aa24b76edaf6b1693198f79e6c295eda8a9.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1;
+
+# Configure extentions
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
+
+# Install extention trough docker
+RUN docker-php-ext-install imagick;
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_sqlite
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install tokenizer
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install -j$(nproc) intl
+RUN docker-php-ext-install soap
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install imap
+
+# Enable extentions trough docker
+RUN docker-php-ext-enable imagick
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install xdebug
-RUN pecl install xdebug-2.8.1 && docker-php-ext-enable xdebug
-
-# Configure Xdebug to interact with PHPstorm
-ENV XDEBUGINI_PATH=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-ENV XDEBUG_CONFIG="remote_host=host.docker.internal"
-ENV PHP_IDE_CONFIG="serverName=docker"
+RUN pecl install xdebug-3.0.4
+RUN docker-php-ext-enable xdebug
 
 # Mailhog
 RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
@@ -88,5 +96,4 @@ RUN service cron start
 # Enable apache modules
 RUN a2enmod rewrite headers
 RUN a2enmod ssl
-#RUN service apache2 restart
 RUN a2enmod expires
