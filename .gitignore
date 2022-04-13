@@ -12,3 +12,5 @@ config/vhosts/*
 !config/vhosts/default.conf
 config/sessions/*
 !config/sessions/.gitkeep
+config/composer/*
+!config/composer/.gitkeep
