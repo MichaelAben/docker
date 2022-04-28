@@ -1,4 +1,4 @@
-FROM php:8-apache
+FROM php:8.1-apache
 MAINTAINER Michael Aben <m.aben@live.nl>
 
 # Update everything
@@ -55,7 +55,6 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install soap
@@ -69,7 +68,7 @@ RUN docker-php-ext-enable imagick
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install xdebug
-RUN pecl install xdebug-3.0.4
+RUN pecl install xdebug-3.1.4
 RUN docker-php-ext-enable xdebug
 
 # Mailhog
