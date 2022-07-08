@@ -43,7 +43,8 @@ RUN rm -r /var/lib/apt/lists/*
 
 # Add Imageick
 RUN mkdir -p /usr/src/php/ext/imagick;
-RUN curl -fsSL https://github.com/Imagick/imagick/archive/06116aa24b76edaf6b1693198f79e6c295eda8a9.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1;
+RUN curl -fsSL https://github.com/Imagick/imagick/archive/refs/tags/3.7.0.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1;
+RUN docker-php-ext-install imagick;
 
 # Configure extentions
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
@@ -68,7 +69,7 @@ RUN docker-php-ext-enable imagick
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install xdebug
-RUN pecl install xdebug-3.1.4
+RUN pecl install xdebug-3.1.5
 RUN docker-php-ext-enable xdebug
 
 # Mailhog
