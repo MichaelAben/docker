@@ -61,6 +61,7 @@ RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install soap
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install imap
+RUN docker-php-ext-install exif
 
 # Enable extentions trough docker
 RUN docker-php-ext-enable imagick
