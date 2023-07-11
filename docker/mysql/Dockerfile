@@ -1,4 +1,4 @@
-FROM mariadb:10.1.26
+FROM mariadb:latest
 MAINTAINER Michael Aben <m.aben@live.nl>
 
 CMD mysql --default-authentication-plugin=mysql_native_password
