@@ -50,6 +50,10 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-enable imagick && \
     docker-php-ext-install exif
 
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+  && docker-php-ext-install \
+    pcntl
+
 RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /var/lib/apt/lists/*
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap
