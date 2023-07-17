@@ -7,6 +7,7 @@ services:
     restart: 'always'
     ports:
       - "80:80"
+      - "5173:5173"
       - "443:443"
     links:
       - mysql
@@ -23,6 +24,7 @@ services:
     environment:
       - TZ=Europe/Amsterdam
       - COMPOSER_MEMORY_LIMIT=-1
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG?}
 
   mysql:
     build:
